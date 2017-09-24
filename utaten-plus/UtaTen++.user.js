@@ -1,10 +1,12 @@
 // ==UserScript==
 // @name        UtaTen++
-// @namespace   example.com
+// @author      Renato Vargas
+// @namespace   https://github.com/renattou/userscripts
 // @include     http://utaten.com/lyric/*/*/
 // @include     http://utaten.com/lyric/*/*
 // @icon        http://utaten.com/favicon.ico
-// @version     2
+// @downloadURL hhttps://github.com/renattou/userscripts/raw/master/utaten-plus/UtaTen%2B%2B.user.js
+// @version     2.1
 // @grant       none
 // ==/UserScript==
 
