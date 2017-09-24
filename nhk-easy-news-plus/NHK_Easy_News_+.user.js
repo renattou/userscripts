@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name        NHK News Easy +
 // @author      Renato Vargas
-// @namespace   https://github.com/engrato/NHK-Easy-News-Plus
+// @namespace   https://github.com/renattou/userscripts
 // @description Adds additional control interface for the NHK News Web Easy website.
 // @include     http://www3.nhk.or.jp/news/easy/*
-// @downloadURL https://github.com/engrato/NHK-Easy-News-Plus/raw/master/NHK_Easy_News_%2B.user.js
-// @version     1.1
+// @downloadURL https://github.com/renattou/userscripts/raw/master/nhk-easy-news-plus/NHK_Easy_News_%2B.user.js
+// @version     1.2
 // @grant       none
 // ==/UserScript==
 
