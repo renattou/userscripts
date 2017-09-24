@@ -4,8 +4,9 @@
 // @namespace   https://github.com/renattou/userscripts
 // @description Adds additional control interface for the NHK News Web Easy website.
 // @include     http://www3.nhk.or.jp/news/easy/*
+// @icon        http://www3.nhk.or.jp/favicon.ico
 // @downloadURL https://github.com/renattou/userscripts/raw/master/nhk-easy-news-plus/NHK_Easy_News_%2B.user.js
-// @version     1.2
+// @version     1.3
 // @grant       none
 // ==/UserScript==
 
