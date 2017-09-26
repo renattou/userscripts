@@ -2,11 +2,10 @@
 // @name        UtaTen++
 // @author      Renato Vargas
 // @namespace   https://github.com/renattou/userscripts
-// @include     http://utaten.com/lyric/*/*/
-// @include     http://utaten.com/lyric/*/*
+// @include     /^https?:\/\/utaten\.com\/lyric\/.*/
 // @icon        http://utaten.com/favicon.ico
 // @downloadURL hhttps://github.com/renattou/userscripts/raw/master/utaten-plus/UtaTen%2B%2B.user.js
-// @version     2.1
+// @version     2.2
 // @grant       none
 // ==/UserScript==
 
