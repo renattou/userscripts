@@ -2,69 +2,60 @@
 // @name        Calculate Average - scrumpoker-online.org
 // @match       https://www.scrumpoker-online.org/*
 // @grant       none
-// @version     1.1
+// @version     1.2
 // @author      JasperV <jasper@vanveenhuizen.nl> (Modified by Renato Vargas)
 // ==/UserScript==
 
-function initAverageCalc() {
-    let p1 = document.createElement("p")
-    p1.innerHTML = "number of people: "
-    let peopleSpan = document.createElement("span")
-    peopleSpan.innerHTML = "?"
-    p1.appendChild(peopleSpan)
+function wasSetup() {
+    return document.getElementsByClassName("average").length > 0;
+}
 
-    let p2 = document.createElement("p")
-    p2.innerHTML = "mean: "
-    let averageSpan = document.createElement("span")
-    averageSpan.innerHTML = "?"
-    p2.appendChild(averageSpan)
+function clear() {
+    let pElements = document.getElementsByClassName("average");
+    for (let i = 0; i < pElements.length; ++i) {
+        pElements[i].remove();
+    }
+}
 
-    let p3 = document.createElement("p")
-    p3.innerHTML = "median: "
-    let medianSpan = document.createElement("span")
-    medianSpan.innerHTML = "?"
-    p3.appendChild(medianSpan)
+function addField(container, name) {
+    let p = document.createElement("p");
+    p.classList.add("average");
+    p.innerHTML = name + ": ";
+    p.style.margin = "0 0 8px 0"
+    let span = document.createElement("span");
+    span.innerHTML = "?";
+    p.appendChild(span);
+    container.prepend(p);
+    return span;
+}
 
-    let p4 = document.createElement("p")
-    p4.innerHTML = "ocurrences: "
-    let ocurrencesSpan = document.createElement("span")
-    ocurrencesSpan.innerHTML = "?"
-    p4.appendChild(ocurrencesSpan)
+function setup() {
+    let container = document.getElementsByClassName("results-content")[0];
+    ocurrencesSpan = addField(container, "Ocurrences");
+    medianSpan = addField(container, "Median");
+    averageSpan = addField(container, "Mean");
+    peopleSpan = addField(container, "# of People");
+}
 
-    let results = document.getElementsByClassName("results-content")[0]
-    results.prepend(p1)
-    results.prepend(p2)
-    results.prepend(p3)
-    results.prepend(p4)
+function averageCalc() {
+    let pointsElements = document.getElementsByClassName("mat-column-storyPoints");
+    let points = [];
+    for (let i = 0; i < pointsElements.length; ++i) {
+        let value = parseInt(pointsElements[i].innerText, 10);
+        if (typeof value != 'number' || isNaN(value)) continue;
+        points.push(value);
+    }
 
-    let button = document.createElement("button")
-    button.innerHTML = "Calculate Average"
-
-    button.addEventListener("click", function()
-    {
-        let elements = document.getElementsByClassName("mat-column-storyPoints")
-        let points = []
-        for (let i = 0; i < elements.length; ++i)
-        {
-            let value = parseInt(elements[i].innerText, 10)
-            if (typeof value != 'number' || isNaN(value)) {
-                continue
-            }
-            points.push(value)
-        }
-        peopleSpan.innerText = count(points)
-        averageSpan.innerText = average(points)
-        medianSpan.innerText = median(points)
-        ocurrencesSpan.innerText = ocurrences(points)
-    })
-
-    document.getElementsByClassName("results-buttons")[0].appendChild(button)
+    peopleSpan.innerText = count(points);
+    averageSpan.innerText = average(points);
+    medianSpan.innerText = median(points);
+    ocurrencesSpan.innerText = ocurrences(points);
 }
 
 function count(values) {
     var count = 0;
 
-    values.forEach(function(item, index) {
+    values.forEach(function (item, index) {
         count++;
     });
 
@@ -75,7 +66,7 @@ function average(values) {
     var total = 0;
     var count = 0;
 
-    values.forEach(function(item, index) {
+    values.forEach(function (item, index) {
         total += item;
         count++;
     });
@@ -83,52 +74,58 @@ function average(values) {
     return total / count;
 }
 
-function median(values){
-  if (values.length ===0) return 0;
+function median(values) {
+    if (values.length === 0) return 0;
 
-  values.sort(function(a,b) {
-    return a - b;
-  });
+    values.sort(function (a, b) {
+        return a - b;
+    });
 
-  var half = Math.floor(values.length / 2);
+    var half = Math.floor(values.length / 2);
 
-  if (values.length % 2) return values[half];
+    if (values.length % 2) return values[half];
 
-  return (values[half - 1] + values[half]) / 2.0;
+    return (values[half - 1] + values[half]) / 2.0;
 }
 
 function ocurrences(values) {
-  let a = [],
-    b = [],
-    arr = [...values], // clone array so we don't change the original when using .sort()
-    prev;
+    let a = [],
+        b = [],
+        arr = [...values], // clone array so we don't change the original when using .sort()
+        prev;
 
-  arr.sort();
-  for (let element of arr) {
-    if (element !== prev) {
-      a.push(element);
-      b.push(1);
+    arr.sort();
+    for (let element of arr) {
+        if (element !== prev) {
+            a.push(element);
+            b.push(1);
+        }
+        else ++b[b.length - 1];
+        prev = element;
     }
-    else ++b[b.length - 1];
-    prev = element;
-  }
 
-  let str = ""
-  for (let i = 0; i < count(a); i++) {
-    str += b[i] + " x " + a[i];
-    if (i < count(a) - 1) str += " | "
-  }
+    let str = ""
+    for (let i = 0; i < count(a); i++) {
+        str += b[i] + " x " + a[i];
+        if (i < count(a) - 1) str += " | "
+    }
 
-  return str;
+    return str;
 }
 
-function waitForElement() {
-    let results = document.getElementsByClassName("results-content")[0]
-    if (typeof results !== "undefined") {
-        initAverageCalc()
+var peopleSpan, averageSpan, medianSpan, ocurrencesSpan;
+
+function updateInfo() {
+    if (document.getElementsByClassName("mat-column-storyPoints").length) {
+        if (!wasSetup()) setup();
+        averageCalc();
+    } else if (wasSetup()) {
+        clear();
     }
-    else {
-        setTimeout(waitForElement, 250)
-    }
-}
-waitForElement()
+
+    setTimeout(function () {
+        updateInfo();
+    }, 100);
+};
+
+updateInfo();
