@@ -115,7 +115,7 @@ function ocurrences(values) {
 
   let str = ""
   for (let i = 0; i < count(a); i++) {
-    str = b[i] + " x " + a[i];
+    str += b[i] + " x " + a[i];
     if (i < count(a) - 1) str += " | "
   }
 
